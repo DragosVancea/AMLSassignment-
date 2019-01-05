@@ -135,8 +135,7 @@ def extract_features_labels():
 
 
             
-    npfaces = np.array(facesfound)
-    np.savetxt("noise_classified.csv", npfaces, delimiter = ',')          
+        
     landmark_features = np.array(all_features)
     return landmark_features
 
