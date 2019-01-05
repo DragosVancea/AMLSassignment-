@@ -16,8 +16,7 @@ def divide_x(test_samples):
     tr_X = X[:test_samples]
     te_X = X[test_samples:]
 
-    #tr_X = X[:100]
-    #te_X = X[100:]
+    
     return tr_X, te_X
 
 
@@ -27,14 +26,12 @@ def divide_x(test_samples):
 
 def get_labels(i,test_samples):
     
-     y=l2.extract_labels(i)
-     Y = np.array([y, -(y - 1)]).T
+     Y=l2.extract_labels(i)
+     #Y = np.array([y, -(y - 1)]).T
      
      tr_Y = Y[:test_samples]
      te_Y = Y[test_samples:]
      
-     #tr_Y = Y[:100]
-     #te_Y = Y[100:]
      
      return tr_Y, te_Y
 
@@ -52,7 +49,7 @@ def SVM_emotion(x_tr, y_tr, x_te):
 
 def SVM_age(x_tr, y_tr, x_te):
     
-   clf = svm.SVC(C=1,  degree=2, gamma='scale', kernel='rbf')
+    clf = svm.SVC(C=100,  degree=2, gamma='scale', kernel='rbf')
     clf.fit(x_tr, y_tr)
     return np.ravel(clf.predict(x_te))
 
@@ -69,8 +66,8 @@ def classify_eyeglasses(test_samples):
     X_train=X_train.reshape(X_train.shape[0],X_train.shape[1]*X_train.shape[2])
     X_test=X_test.reshape(X_test.shape[0],X_test.shape[1]*X_test.shape[2])
     Y_train, Y_test=get_labels(2,test_samples)
-    Y_train=Y_train[:,0]
-    Y_test=Y_test[:,0]
+    #Y_train=Y_train[:,0]
+    #Y_test=Y_test[:,0]
     Y_pred_te = SVM_eyeglasses(X_train,Y_train,X_test)    
     size_te = len(Y_pred_te)
     Y_pred_tr = SVM_eyeglasses(X_train,Y_train,X_train)
@@ -90,8 +87,8 @@ def classify_emotion(test_samples):
     X_train=X_train.reshape(X_train.shape[0],X_train.shape[1]*X_train.shape[2])
     X_test=X_test.reshape(X_test.shape[0],X_test.shape[1]*X_test.shape[2])
     Y_train, Y_test=get_labels(3,test_samples)
-    Y_train=Y_train[:,0]
-    Y_test=Y_test[:,0]
+    #Y_train=Y_train[:,0]
+    #Y_test=Y_test[:,0]
     Y_pred_te = SVM_emotion(X_train,Y_train,X_test)
     size_te = len(Y_pred_te)
     Y_pred_tr = SVM_emotion(X_train,Y_train,X_train)
@@ -111,8 +108,8 @@ def classify_age(test_samples):
     X_train=X_train.reshape(X_train.shape[0],X_train.shape[1]*X_train.shape[2])
     X_test=X_test.reshape(X_test.shape[0],X_test.shape[1]*X_test.shape[2])
     Y_train, Y_test=get_labels(4,test_samples)
-    Y_train=Y_train[:,0]
-    Y_test=Y_test[:,0]
+    #Y_train=Y_train[:,0]
+    #Y_test=Y_test[:,0]
     Y_pred_te = SVM_age(X_train,Y_train,X_test)
     size_te = len(Y_pred_te)
     Y_pred_tr = SVM_age(X_train,Y_train,X_train)
@@ -133,8 +130,8 @@ def classify_human(test_samples):
     X_train=X_train.reshape(X_train.shape[0],X_train.shape[1]*X_train.shape[2])
     X_test=X_test.reshape(X_test.shape[0],X_test.shape[1]*X_test.shape[2])
     Y_train, Y_test=get_labels(5,test_samples)
-    Y_train=Y_train[:,0]
-    Y_test=Y_test[:,0]
+    #Y_train=Y_train[:,0]
+    #Y_test=Y_test[:,0]
     Y_pred_te = SVM_human(X_train,Y_train,X_test)
     size_te = len(Y_pred_te)
     Y_pred_tr = SVM_human(X_train,Y_train,X_train)
@@ -149,6 +146,6 @@ def classify_human(test_samples):
 
 classify_eyeglasses(3000)
 classify_emotion(4000)
-classify_age(4000)
+classify_age(3500)
 classify_human(3000)
 
