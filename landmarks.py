@@ -108,7 +108,7 @@ def extract_features_labels():
   
     
     all_features = []
-    facesfound = []
+    good_images = []
   
     
     if os.path.isdir(images_dir):
@@ -126,18 +126,19 @@ def extract_features_labels():
             features, _ = run_dlib_shape(img)
             if features is not None:
                 all_features.append(features)
-                facesfound.append(int(file_name))
+                good_images.append(int(file_name))
+                num=num+1
                              
             else:
                 flag[0, int(file_name)-1]=1
                    
-            num=num+1
+            
 
 
             
         
     landmark_features = np.array(all_features)
-    return landmark_features
+    return landmark_features, good_images, num
 
 
         
