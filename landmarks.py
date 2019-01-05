@@ -104,23 +104,16 @@ flag=np.zeros((1,5000))
 
 
 def extract_features_labels():
-    """
-    This funtion extracts the landmarks features for all images in the folder 'dataset/celeba'.
-    It also extract the gender label for each image.
-    :return:
-        landmark_features:  an array containing 68 landmark points for each image in which a face was detected
-        gender_labels:      an array containing the gender label (male=0 and female=1) for each image in
-                            which a face was detected
-    """
-    
+  
+  
     
     all_features = []
-    
-
+    facesfound = []
+  
     
     if os.path.isdir(images_dir):
        
-        
+       
         num=1
         for img_path in image_paths:
             
@@ -133,23 +126,27 @@ def extract_features_labels():
             features, _ = run_dlib_shape(img)
             if features is not None:
                 all_features.append(features)
-
-                
+                facesfound.append(int(file_name))
+                             
             else:
-                flag[0, num-1]=1
+                flag[0, int(file_name)-1]=1
+                   
             num=num+1
-                
-    landmark_features = np.array(all_features)
 
+
+            
+    npfaces = np.array(facesfound)
+    np.savetxt("noise_classified.csv", npfaces, delimiter = ',')          
+    landmark_features = np.array(all_features)
     return landmark_features
 
 
         
 def extract_labels(i):
 
-
+    
     all_labels = []
-    eyeglasses_labels = {line.split(',')[0] : int(line.split(',')[i]) for line in lines[2:]}
+    label = {line.split(',')[0] : int(line.split(',')[i]) for line in lines[2:]}
     if os.path.isdir(images_dir):
         
         
@@ -158,11 +155,14 @@ def extract_labels(i):
         for img_path in image_paths:
             
             file_name= img_path.split('\\') [2].split('.')[0]
-            if(flag[0,num]==0):
-                all_labels.append(eyeglasses_labels[file_name])
+            if(flag[0,int(file_name)-1]==0):
+                all_labels.append(label[file_name])
+                
             num=num+1
-    
-    eyeglasses_labels = (np.array(all_labels) + 1)/2 # simply converts the -1 into 0, so male=0 and female=1
-    return eyeglasses_labels
+
+    label = (np.array(all_labels) + 1)/2 
+    return label
+
+ 
 
     

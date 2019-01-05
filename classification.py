@@ -145,7 +145,7 @@ def classify_human(test_samples):
     
 
 classify_eyeglasses(3000)
-classify_emotion(4000)
-classify_age(3500)
-classify_human(3000)
+#classify_emotion(4000)
+#classify_age(3500)
+#classify_human(3000)
 
