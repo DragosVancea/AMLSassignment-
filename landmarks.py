@@ -10,7 +10,7 @@ global basedir, image_paths, target_size
 #images_dir = os.path.join(basedir,'celeba')
 #labels_filename = 'labels.csv'
 
-basedir = './assingment'
+basedir = './assignment'
 images_dir = os.path.join(basedir,'dataset')
 labels_filename = 'attribute_list.csv'
 
@@ -160,7 +160,8 @@ def extract_labels(i):
                 
             num=num+1
 
-    label = (np.array(all_labels) + 1)/2 
+        label = (np.array(all_labels) + 1)/2
+        
     return label
 
  
