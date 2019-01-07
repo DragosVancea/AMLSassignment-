@@ -77,10 +77,11 @@ def classify_eyeglasses_with_CNN():
         results_writer= csv.writer(output_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         image_column= np.array(img_test).T
         Y_pred_column=np.array(Y_pred).T
-        Y_test_column=np.array(Y_test2).T
         results_writer.writerow([ score[1]])
         for i in range(0, number_of_test_samples-1):
-            results_writer.writerow([image_column[i], Y_pred_column[i], Y_test_column[i]])
+            if Y_pred_column[i] == 0:
+                Y_pred_column[i]= -1
+            results_writer.writerow([image_column[i], Y_pred_column[i]])
 
 
 
@@ -147,11 +148,12 @@ def classify_emotion_with_CNN():
         results_writer= csv.writer(output_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         image_column= np.array(img_test).T
         Y_pred_column=np.array(Y_pred).T
-        Y_test_column=np.array(Y_test2).T
         
         results_writer.writerow([ score[1]])
         for i in range(0, number_of_test_samples-1):
-            results_writer.writerow([image_column[i], Y_pred_column[i], Y_test_column[i]])
+            if Y_pred_column[i] == 0:
+                Y_pred_column[i]= -1
+            results_writer.writerow([image_column[i], Y_pred_column[i]])
 
 
 
@@ -219,11 +221,13 @@ def classify_age_with_CNN():
         results_writer= csv.writer(output_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         image_column= np.array(img_test).T
         Y_pred_column=np.array(Y_pred).T
-        Y_test_column=np.array(Y_test2).T
+        
         
         results_writer.writerow([ score[1]])
         for i in range(0, number_of_test_samples-1):
-            results_writer.writerow([image_column[i], Y_pred_column[i], Y_test_column[i]])
+            if Y_pred_column[i] == 0:
+                Y_pred_column[i]= -1
+            results_writer.writerow([image_column[i], Y_pred_column[i]])
 
 
 
@@ -291,11 +295,13 @@ def classify_human_with_CNN():
         results_writer= csv.writer(output_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         image_column= np.array(img_test).T
         Y_pred_column=np.array(Y_pred).T
-        Y_test_column=np.array(Y_test2).T
+
         
         results_writer.writerow([ score[1]])
         for i in range(0, number_of_test_samples-1):
-            results_writer.writerow([image_column[i], Y_pred_column[i], Y_test_column[i]])
+            if Y_pred_column[i] == 0:
+                Y_pred_column[i]= -1
+            results_writer.writerow([image_column[i], Y_pred_column[i]])
 
 
 
@@ -322,18 +328,19 @@ def classify_hair():
     model.add(Conv2D(32, kernel_size=(9,9), activation='relu', input_shape=(256,256,3)))
     model.add(MaxPooling2D(pool_size=(2, 2)))
     model.add(Conv2D(48, (9,9), activation='relu'))
-    model.add(Dropout(0.25))
+    model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Dropout(0.5))
     model.add(Flatten())
     model.add(Dense(128, activation='relu'))
-    model.add(Dropout(0.5))
+    model.add(Dropout(0.75))
     model.add(Dense(num_classes, activation='softmax'))
 
     model.compile(loss=keras.losses.categorical_crossentropy, optimizer=keras.optimizers.Adadelta(), metrics=['accuracy'])
     
 
     
-    model.fit(X_train, Y_train, batch_size=batch_size, epochs=epochs,  verbose=1, validation_data=(X_test, Y_test))
-    score = model.evaluate(X_test, Y_test, verbose=0)
+    model.fit(X_train, Y_train, batch_size=batch_size, epochs=epochs, validation_data=(X_test, Y_test))
+    score = model.evaluate(X_test, Y_test)
     print('Test loss:', score[0])
     print('Test accuracy:', score[1])
 
@@ -358,7 +365,7 @@ def classify_hair():
         Y_pred.append(c)
         i=i+1
     
-
+    
     
     with open('task_5.csv', mode='w') as output_file:
         results_writer= csv.writer(output_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
@@ -369,7 +376,7 @@ def classify_hair():
         
         results_writer.writerow([ score[1]])
         for i in range(0, number_of_test_samples-1):
-            results_writer.writerow([image_column[i], Y_pred_column[i], Y_test_column[i]])
+            results_writer.writerow([image_column[i], Y_pred_column[i]])
 
 
 def CNN_eyeglasses():

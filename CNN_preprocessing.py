@@ -8,9 +8,7 @@ import dlib
 import matplotlib.pyplot as plt
 import SVM_preprocessing as l2
 
-#basedir = './dataset'
-#images_dir = os.path.join(basedir,'celeba')
-#labels_filename = 'labels.csv'
+
 
 #Specify the folder containing the attribute list file and the folder with the pictures
 basedir = './assignment'

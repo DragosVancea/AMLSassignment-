@@ -51,27 +51,27 @@ def get_labels(i,test_samples):
 
 def SVM_eyeglasses(x_tr, y_tr, x_te):
     
-    clf = svm.SVC(C=1,  degree=2, gamma='scale', kernel='poly')
-    clf.fit(x_tr, y_tr)
-    return np.ravel(clf.predict(x_te))
+    model = svm.SVC(C=1,  degree=2, gamma='scale', kernel='poly')
+    model.fit(x_tr, y_tr)
+    return np.ravel(model.predict(x_te))
 
 def SVM_emotion(x_tr, y_tr, x_te):
     
-    clf = svm.SVC(C=1,  degree=2, gamma='scale', kernel='poly')
-    clf.fit(x_tr, y_tr)
-    return np.ravel(clf.predict(x_te))
+    model = svm.SVC(C=5,  degree=2, gamma='scale', kernel='poly')
+    model.fit(x_tr, y_tr)
+    return np.ravel(model.predict(x_te))
 
 def SVM_age(x_tr, y_tr, x_te):
     
-    clf = svm.SVC(C=10,  degree=2, gamma='scale', kernel='rbf')
-    clf.fit(x_tr, y_tr)
-    return np.ravel(clf.predict(x_te))
+    model = svm.SVC(C=5, gamma='scale', kernel='rbf')
+    model.fit(x_tr, y_tr)
+    return np.ravel(model.predict(x_te))
 
 def SVM_human(x_tr, y_tr, x_te):
     
-    clf = svm.SVC(C=1,  degree=2, gamma='scale', kernel='poly')
-    clf.fit(x_tr, y_tr)
-    return np.ravel(clf.predict(x_te))
+    model = svm.SVC(C=5,  degree=2, gamma='scale', kernel='poly')
+    model.fit(x_tr, y_tr)
+    return np.ravel(model.predict(x_te))
 
         
 def classify_eyeglasses_with_SVM(test_samples):
@@ -105,6 +105,8 @@ def classify_eyeglasses_with_SVM(test_samples):
         Y_pred_column=np.array(Y_pred_te).T
         results_writer.writerow([ print_acc])
         for i in range(0, number_of_test_samples-1):
+            if Y_pred_column[i] == 0:
+                Y_pred_column[i]= -1
             results_writer.writerow([image_column[i], Y_pred_column[i]])
     
 
@@ -139,6 +141,8 @@ def classify_emotion_with_SVM(test_samples):
         Y_pred_column=np.array(Y_pred_te).T
         results_writer.writerow([ print_acc])
         for i in range(0, number_of_test_samples-1):
+            if Y_pred_column[i] == 0:
+                Y_pred_column[i]= -1
             results_writer.writerow([image_column[i], Y_pred_column[i]])
 
 
@@ -171,6 +175,8 @@ def classify_age_with_SVM(test_samples):
         Y_pred_column=np.array(Y_pred_te).T
         results_writer.writerow([ print_acc])
         for i in range(0, number_of_test_samples-1):
+            if Y_pred_column[i] == 0:
+                Y_pred_column[i]= -1
             results_writer.writerow([image_column[i], Y_pred_column[i]])
 
 
@@ -202,6 +208,8 @@ def classify_human_with_SVM(test_samples):
         Y_pred_column=np.array(Y_pred_te).T
         results_writer.writerow([ print_acc])
         for i in range(0, number_of_test_samples-1):
+            if Y_pred_column[i] == 0:
+                Y_pred_column[i]= -1
             results_writer.writerow([image_column[i], Y_pred_column[i]])
             
 def SVM_eyeglasses_classification():   

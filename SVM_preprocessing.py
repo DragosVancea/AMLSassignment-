@@ -9,10 +9,6 @@ import dlib
 global basedir, image_paths, target_size
 
 
-#basedir = './dataset'
-#images_dir = os.path.join(basedir,'celeba')
-#labels_filename = 'labels.csv'
-
 
 
 #Specify the folder containing the attribute list file and the folder with the pictures
